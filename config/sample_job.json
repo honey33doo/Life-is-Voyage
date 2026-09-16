@@ -1,0 +1,71 @@
+{
+  "_comment": "카드뉴스 자동화 작업 설정 파일. 복사해서 my_job.json으로 사용.",
+  "job_id": "daily_cardnews",
+  "topic": {
+    "main": "이재명 정부 성과",
+    "keywords": ["이재명", "정부정책", "외교성과", "민생"],
+    "style": "achievement",
+    "tone": "informative",
+    "exclude_keywords": []
+  },
+  "sources": {
+    "youtube_search": true,
+    "web_search": true,
+    "search_queries": [
+      "이재명 정부 성과 오늘",
+      "이재명 외교 성과",
+      "이재명 정책 진행상황"
+    ],
+    "max_sources": 10
+  },
+  "content": {
+    "type": "cardnews",
+    "card_count": 8,
+    "include_article": true,
+    "article_type": "straight",
+    "language": "ko"
+  },
+  "media": {
+    "card_format": "1080x1080",
+    "card_style": "dark_modern",
+    "brand_name": "데이뉴스",
+    "brand_color_primary": "#1E3A5F",
+    "brand_color_accent": "#F4A300",
+    "watermark": true,
+    "thumbnail": true
+  },
+  "publish": {
+    "youtube": {
+      "enabled": true,
+      "as_shorts": false,
+      "privacy": "public",
+      "category_id": "25",
+      "default_tags": ["카드뉴스", "이재명", "정부정책", "시사"]
+    },
+    "instagram": {
+      "enabled": true,
+      "as_reels": false
+    },
+    "naver_blog": {
+      "enabled": true,
+      "category": "시사"
+    },
+    "tistory": {
+      "enabled": true,
+      "category": "정치시사"
+    }
+  },
+  "require_approval": true,
+  "credentials": {
+    "anthropic_key_source": "google_drive",
+    "anthropic_key_filename": "anthropic_key.txt",
+    "youtube_client_secret": "config/youtube_client_secret.json",
+    "instagram_token": "",
+    "naver_client_id": "",
+    "naver_client_secret": "",
+    "tistory_access_token": ""
+  },
+  "schedule": {
+    "timezone": "Asia/Seoul"
+  }
+}
