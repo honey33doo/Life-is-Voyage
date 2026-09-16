@@ -1,20 +1,18 @@
 """
-scheduled_runner.py â€” Claude Cowork ì˜ˆì•½ ì‹¤í–‰ ì˜¤ì¼€ìŠ¤íŠ¸ë ˆì´í„°
-=============================================================
-Claude Cowork ì˜ˆì•½ ì‘ì—…ì—ì„œ í˜¸ì¶œí•˜ëŠ” ì§„ì…ì .
-ì‹¤í–‰ ìˆœì„œ:
-  1. Google Drive MCP ë¡œ anthropic_key.txt ì½ê¸°
-  2. ANTHROPIC_API_KEY í™˜ê²½ë³€ìˆ˜ ì„¤ì •
-  3. GitHub repo í´ë¡  ë˜ëŠ” pull (ìµœì‹  ì½”ë“œ ë™ê¸°í™”)
-  4. python src/pipeline.py --config config/my_job.json ì‹¤í–‰
+scheduled_runner.py ??Claude Cowork ?ˆì•½ ?¤í–‰ ?¤ì??¤íŠ¸?ˆì´??=============================================================
+Claude Cowork ?ˆì•½ ?‘ì—…?ì„œ ?¸ì¶œ?˜ëŠ” ì§„ì…??
+?¤í–‰ ?œì„œ:
+  1. Google Drive MCP ë¡?anthropic_key.txt ?½ê¸°
+  2. ANTHROPIC_API_KEY ?˜ê²½ë³€???¤ì •
+  3. GitHub repo ?´ë¡  ?ëŠ” pull (ìµœì‹  ì½”ë“œ ?™ê¸°??
+  4. python src/pipeline.py --config config/my_job.json ?¤í–‰
 
-ì‚¬ìš©ë²• (Claude Cowork ì˜ˆì•½ ì‘ì—… í”„ë¡¬í”„íŠ¸ì— í¬í•¨):
+?¬ìš©ë²?(Claude Cowork ?ˆì•½ ?‘ì—… ?„ë¡¬?„íŠ¸???¬í•¨):
   python /home/claude/cardnews-auto/scheduled_runner.py
 
-í™˜ê²½ ìš”êµ¬ì‚¬í•­:
-  - Google Drive MCP ì—°ê²° (claude.ai Cowork)
-  - GITHUB_REPO_URL í™˜ê²½ë³€ìˆ˜ ë˜ëŠ” ìŠ¤í¬ë¦½íŠ¸ ìƒìˆ˜ë¡œ ì§€ì •
-  - config/my_job.json ì— credentials ì„¹ì…˜ ì™„ì„±
+?˜ê²½ ?”êµ¬?¬í•­:
+  - Google Drive MCP ?°ê²° (claude.ai Cowork)
+  - GITHUB_REPO_URL ?˜ê²½ë³€???ëŠ” ?¤í¬ë¦½íŠ¸ ?ìˆ˜ë¡?ì§€??  - config/my_job.json ??credentials ?¹ì…˜ ?„ì„±
 """
 
 import json
@@ -25,14 +23,13 @@ import sys
 import tempfile
 from pathlib import Path
 
-# â”€â”€ ìƒìˆ˜ â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-GITHUB_REPO_URL = "https://github.com/honey33doo/cardnews-auto.git"
+# ?€?€ ?ìˆ˜ ?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€
+GITHUB_REPO_URL = "https://github.com/honey33doo/Life-is-Voyage.git"
 LOCAL_REPO_DIR  = Path("/home/claude/cardnews-auto")
 CONFIG_FILE     = LOCAL_REPO_DIR / "config" / "my_job.json"
 PIPELINE_SCRIPT = LOCAL_REPO_DIR / "src" / "pipeline.py"
-DRIVE_KEY_FILE  = "anthropic_key.txt"   # Google Drive ë£¨íŠ¸ì˜ íŒŒì¼ëª…
-
-# â”€â”€ ë¡œê¹… â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+DRIVE_KEY_FILE  = "anthropic_key.txt"   # Google Drive ë£¨íŠ¸???Œì¼ëª?
+# ?€?€ ë¡œê¹… ?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [runner] %(levelname)s: %(message)s",
@@ -41,10 +38,10 @@ logging.basicConfig(
 logger = logging.getLogger("cardnews.runner")
 
 
-# â”€â”€ í—¬í¼ â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+# ?€?€ ?¬í¼ ?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€
 
 def _run(cmd: list[str], cwd: Path = None, env: dict = None) -> subprocess.CompletedProcess:
-    """ì„œë¸Œí”„ë¡œì„¸ìŠ¤ ì‹¤í–‰ + ì‹¤íŒ¨ ì‹œ ì˜ˆì™¸."""
+    """?œë¸Œ?„ë¡œ?¸ìŠ¤ ?¤í–‰ + ?¤íŒ¨ ???ˆì™¸."""
     merged_env = {**os.environ, **(env or {})}
     result = subprocess.run(
         cmd,
@@ -55,29 +52,29 @@ def _run(cmd: list[str], cwd: Path = None, env: dict = None) -> subprocess.Compl
     )
     if result.returncode != 0:
         raise RuntimeError(
-            f"ëª…ë ¹ ì‹¤íŒ¨ (exit {result.returncode}): {' '.join(cmd)}\n"
+            f"ëª…ë ¹ ?¤íŒ¨ (exit {result.returncode}): {' '.join(cmd)}\n"
             f"STDERR: {result.stderr.strip()}"
         )
     return result
 
 
 def _install_deps() -> None:
-    """requirements.txt ì˜ì¡´ì„± ì„¤ì¹˜."""
+    """requirements.txt ?˜ì¡´???¤ì¹˜."""
     req = LOCAL_REPO_DIR / "requirements.txt"
     if not req.exists():
-        logger.warning("requirements.txt ì—†ìŒ â€” ì˜ì¡´ì„± ì„¤ì¹˜ ìŠ¤í‚µ")
+        logger.warning("requirements.txt ?†ìŒ ???˜ì¡´???¤ì¹˜ ?¤í‚µ")
         return
-    logger.info("pip ì˜ì¡´ì„± ì„¤ì¹˜ ì¤‘...")
+    logger.info("pip ?˜ì¡´???¤ì¹˜ ì¤?..")
     _run(
         [sys.executable, "-m", "pip", "install", "-r", str(req),
          "--break-system-packages", "-q"],
         cwd=LOCAL_REPO_DIR,
     )
-    logger.info("ì˜ì¡´ì„± ì„¤ì¹˜ ì™„ë£Œ")
+    logger.info("?˜ì¡´???¤ì¹˜ ?„ë£Œ")
 
 
 def _install_system_fonts() -> None:
-    """ë‚˜ëˆ”í°íŠ¸ ì‹œìŠ¤í…œ íŒ¨í‚¤ì§€ ì„¤ì¹˜ (ì—†ìœ¼ë©´ ì‹œë„)."""
+    """?˜ëˆ”?°íŠ¸ ?œìŠ¤???¨í‚¤ì§€ ?¤ì¹˜ (?†ìœ¼ë©??œë„)."""
     try:
         import subprocess as sp
         result = sp.run(
@@ -85,26 +82,25 @@ def _install_system_fonts() -> None:
             capture_output=True, text=True, timeout=5
         )
         if "Nanum" in result.stdout:
-            return  # ì´ë¯¸ ì„¤ì¹˜ë¨
-    except Exception:
+            return  # ?´ë? ?¤ì¹˜??    except Exception:
         pass
-    logger.info("ë‚˜ëˆ” í°íŠ¸ ì„¤ì¹˜ ì¤‘...")
+    logger.info("?˜ëˆ” ?°íŠ¸ ?¤ì¹˜ ì¤?..")
     try:
         _run(["apt-get", "install", "-y", "-q", "fonts-nanum", "fonts-nanum-extra"])
-        logger.info("ë‚˜ëˆ” í°íŠ¸ ì„¤ì¹˜ ì™„ë£Œ")
+        logger.info("?˜ëˆ” ?°íŠ¸ ?¤ì¹˜ ?„ë£Œ")
     except Exception as e:
-        logger.warning(f"í°íŠ¸ ì„¤ì¹˜ ì‹¤íŒ¨ (ê³„ì† ì§„í–‰): {e}")
+        logger.warning(f"?°íŠ¸ ?¤ì¹˜ ?¤íŒ¨ (ê³„ì† ì§„í–‰): {e}")
 
 
-# â”€â”€ Google Drive í‚¤ ì½ê¸° â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+# ?€?€ Google Drive ???½ê¸° ?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€
 
 def _read_key_from_env() -> str | None:
-    """í™˜ê²½ë³€ìˆ˜ì— API í‚¤ê°€ ì´ë¯¸ ìˆìœ¼ë©´ ë°˜í™˜."""
+    """?˜ê²½ë³€?˜ì— API ?¤ê? ?´ë? ?ˆìœ¼ë©?ë°˜í™˜."""
     return os.environ.get("ANTHROPIC_API_KEY", "").strip() or None
 
 
 def _read_key_from_config() -> str | None:
-    """config/my_job.json ì˜ credentials.anthropic_key_value ì—ì„œ ì½ê¸°."""
+    """config/my_job.json ??credentials.anthropic_key_value ?ì„œ ?½ê¸°."""
     if not CONFIG_FILE.exists():
         return None
     try:
@@ -116,74 +112,73 @@ def _read_key_from_config() -> str | None:
 
 def _read_key_from_drive_mcp() -> str | None:
     """
-    Google Drive MCP ë¥¼ í†µí•´ anthropic_key.txt íŒŒì¼ì„ ì½ëŠ”ë‹¤.
-    ì´ í•¨ìˆ˜ëŠ” Claude Cowork ì„¸ì…˜ì—ì„œ ì§ì ‘ ì‹¤í–‰ë˜ëŠ” ê²½ìš°ì—ë§Œ ë™ì‘í•œë‹¤.
-    (MCP íˆ´ì€ Python subprocess ì—ì„œ í˜¸ì¶œ ë¶ˆê°€ â€” Claude ì„¸ì…˜ ë‚´ë¶€ì—ì„œë§Œ ê°€ëŠ¥)
+    Google Drive MCP ë¥??µí•´ anthropic_key.txt ?Œì¼???½ëŠ”??
+    ???¨ìˆ˜??Claude Cowork ?¸ì…˜?ì„œ ì§ì ‘ ?¤í–‰?˜ëŠ” ê²½ìš°?ë§Œ ?™ì‘?œë‹¤.
+    (MCP ?´ì? Python subprocess ?ì„œ ?¸ì¶œ ë¶ˆê? ??Claude ?¸ì…˜ ?´ë??ì„œë§?ê°€??
 
-    â†’ ì‹¤ì œë¡œëŠ” scheduled_runner ê°€ Claude ì„¸ì…˜ì˜ ì¼ë¶€ë¡œ ì‹¤í–‰ë˜ë¯€ë¡œ,
-      Claude ê°€ MCP ë¥¼ í†µí•´ í‚¤ë¥¼ ì½ì–´ í™˜ê²½ë³€ìˆ˜ë¡œ ë¨¼ì € ì£¼ì…í•œ ë’¤
-      ì´ ìŠ¤í¬ë¦½íŠ¸ë¥¼ í˜¸ì¶œí•´ì•¼ í•œë‹¤.
+    ???¤ì œë¡œëŠ” scheduled_runner ê°€ Claude ?¸ì…˜???¼ë?ë¡??¤í–‰?˜ë?ë¡?
+      Claude ê°€ MCP ë¥??µí•´ ?¤ë? ?½ì–´ ?˜ê²½ë³€?˜ë¡œ ë¨¼ì? ì£¼ì…????      ???¤í¬ë¦½íŠ¸ë¥??¸ì¶œ?´ì•¼ ?œë‹¤.
 
     Returns:
-        None (ì´ í•¨ìˆ˜ì—ì„œëŠ” ì§ì ‘ MCP í˜¸ì¶œ ë¶ˆê°€)
+        None (???¨ìˆ˜?ì„œ??ì§ì ‘ MCP ?¸ì¶œ ë¶ˆê?)
     """
     logger.info(
-        "Google Drive MCP í‚¤ ì½ê¸°ëŠ” Claude ì„¸ì…˜ì—ì„œ ì²˜ë¦¬ë©ë‹ˆë‹¤.\n"
-        "  â†’ ANTHROPIC_API_KEY í™˜ê²½ë³€ìˆ˜ê°€ ì„¤ì •ë˜ì–´ ìˆì–´ì•¼ í•©ë‹ˆë‹¤.\n"
-        "  â†’ ì„¤ì • ë°©ë²•: Claude ì„¸ì…˜ì—ì„œ mcp__Google_Drive__read_file_content ë¡œ ì½ì–´\n"
-        "    os.environ['ANTHROPIC_API_KEY'] = <key> ë¡œ ì „ë‹¬í•˜ì„¸ìš”."
+        "Google Drive MCP ???½ê¸°??Claude ?¸ì…˜?ì„œ ì²˜ë¦¬?©ë‹ˆ??\n"
+        "  ??ANTHROPIC_API_KEY ?˜ê²½ë³€?˜ê? ?¤ì •?˜ì–´ ?ˆì–´???©ë‹ˆ??\n"
+        "  ???¤ì • ë°©ë²•: Claude ?¸ì…˜?ì„œ mcp__Google_Drive__read_file_content ë¡??½ì–´\n"
+        "    os.environ['ANTHROPIC_API_KEY'] = <key> ë¡??„ë‹¬?˜ì„¸??"
     )
     return None
 
 
 def get_api_key() -> str:
     """
-    ìš°ì„ ìˆœìœ„: í™˜ê²½ë³€ìˆ˜ â†’ config íŒŒì¼ â†’ (Drive MCP: ì™¸ë¶€ì—ì„œ ì£¼ì… í•„ìš”)
+    ?°ì„ ?œìœ„: ?˜ê²½ë³€????config ?Œì¼ ??(Drive MCP: ?¸ë??ì„œ ì£¼ì… ?„ìš”)
     """
     key = _read_key_from_env()
     if key:
-        logger.info("âœ“ API í‚¤: í™˜ê²½ë³€ìˆ˜ì—ì„œ ë¡œë“œ")
+        logger.info("??API ?? ?˜ê²½ë³€?˜ì—??ë¡œë“œ")
         return key
 
     key = _read_key_from_config()
     if key:
-        logger.info("âœ“ API í‚¤: config/my_job.json ì—ì„œ ë¡œë“œ")
+        logger.info("??API ?? config/my_job.json ?ì„œ ë¡œë“œ")
         os.environ["ANTHROPIC_API_KEY"] = key
         return key
 
     raise EnvironmentError(
-        "ANTHROPIC_API_KEY ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.\n"
-        "ë‹¤ìŒ ì¤‘ í•˜ë‚˜ë¥¼ ì„ íƒí•˜ì„¸ìš”:\n"
-        "  1) í™˜ê²½ë³€ìˆ˜ ANTHROPIC_API_KEY ì„¤ì •\n"
-        "  2) config/my_job.json ì˜ credentials.anthropic_key_value ì…ë ¥\n"
-        "  3) Claude ì„¸ì…˜ì—ì„œ Google Drive MCP ë¡œ ì½ì–´ í™˜ê²½ë³€ìˆ˜ì— ì£¼ì…"
+        "ANTHROPIC_API_KEY ë¥?ì°¾ì„ ???†ìŠµ?ˆë‹¤.\n"
+        "?¤ìŒ ì¤??˜ë‚˜ë¥?? íƒ?˜ì„¸??\n"
+        "  1) ?˜ê²½ë³€??ANTHROPIC_API_KEY ?¤ì •\n"
+        "  2) config/my_job.json ??credentials.anthropic_key_value ?…ë ¥\n"
+        "  3) Claude ?¸ì…˜?ì„œ Google Drive MCP ë¡??½ì–´ ?˜ê²½ë³€?˜ì— ì£¼ì…"
     )
 
 
-# â”€â”€ GitHub ë™ê¸°í™” â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+# ?€?€ GitHub ?™ê¸°???€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€
 
 def sync_repo() -> None:
-    """GitHub ì—ì„œ ìµœì‹  ì½”ë“œë¥¼ ê°€ì ¸ì˜¨ë‹¤ (í´ë¡  or pull)."""
+    """GitHub ?ì„œ ìµœì‹  ì½”ë“œë¥?ê°€?¸ì˜¨??(?´ë¡  or pull)."""
     git_dir = LOCAL_REPO_DIR / ".git"
     if git_dir.exists():
-        logger.info("git pull â€” ìµœì‹  ì½”ë“œ ë™ê¸°í™” ì¤‘...")
+        logger.info("git pull ??ìµœì‹  ì½”ë“œ ?™ê¸°??ì¤?..")
         _run(["git", "pull", "--ff-only"], cwd=LOCAL_REPO_DIR)
-        logger.info("git pull ì™„ë£Œ")
+        logger.info("git pull ?„ë£Œ")
     else:
         parent = LOCAL_REPO_DIR.parent
         parent.mkdir(parents=True, exist_ok=True)
-        logger.info(f"git clone {GITHUB_REPO_URL} â†’ {LOCAL_REPO_DIR}")
+        logger.info(f"git clone {GITHUB_REPO_URL} ??{LOCAL_REPO_DIR}")
         _run(
             ["git", "clone", GITHUB_REPO_URL, str(LOCAL_REPO_DIR)],
             cwd=parent,
         )
-        logger.info("git clone ì™„ë£Œ")
+        logger.info("git clone ?„ë£Œ")
 
 
-# â”€â”€ íŒŒì´í”„ë¼ì¸ ì‹¤í–‰ â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+# ?€?€ ?Œì´?„ë¼???¤í–‰ ?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€
 
 def run_pipeline(step: str = "all", no_publish: bool = False) -> None:
-    """pipeline.py ë¥¼ ì§€ì •ëœ ìŠ¤í…ìœ¼ë¡œ ì‹¤í–‰í•œë‹¤."""
+    """pipeline.py ë¥?ì§€?•ëœ ?¤í…?¼ë¡œ ?¤í–‰?œë‹¤."""
     cmd = [
         sys.executable, str(PIPELINE_SCRIPT),
         "--config", str(CONFIG_FILE),
@@ -192,56 +187,54 @@ def run_pipeline(step: str = "all", no_publish: bool = False) -> None:
     if no_publish:
         cmd.append("--no-publish")
 
-    logger.info(f"íŒŒì´í”„ë¼ì¸ ì‹¤í–‰: {' '.join(cmd)}")
+    logger.info(f"?Œì´?„ë¼???¤í–‰: {' '.join(cmd)}")
     result = subprocess.run(cmd, cwd=str(LOCAL_REPO_DIR))
     if result.returncode != 0:
-        raise RuntimeError(f"íŒŒì´í”„ë¼ì¸ ì‹¤íŒ¨ (exit {result.returncode})")
+        raise RuntimeError(f"?Œì´?„ë¼???¤íŒ¨ (exit {result.returncode})")
 
 
-# â”€â”€ ë©”ì¸ â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+# ?€?€ ë©”ì¸ ?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€
 
 def main():
     import argparse
-    parser = argparse.ArgumentParser(description="ì¹´ë“œë‰´ìŠ¤ ìë™í™” ìŠ¤ì¼€ì¤„ ì‹¤í–‰ê¸°")
+    parser = argparse.ArgumentParser(description="ì¹´ë“œ?´ìŠ¤ ?ë™???¤ì?ì¤??¤í–‰ê¸?)
     parser.add_argument("--step", default="all",
                         choices=["all", "research", "script", "cards", "publish"],
-                        help="ì‹¤í–‰í•  íŒŒì´í”„ë¼ì¸ ìŠ¤í…")
+                        help="?¤í–‰???Œì´?„ë¼???¤í…")
     parser.add_argument("--no-sync", action="store_true",
-                        help="GitHub ë™ê¸°í™” ìŠ¤í‚µ (ë¡œì»¬ ì½”ë“œ ì‚¬ìš©)")
+                        help="GitHub ?™ê¸°???¤í‚µ (ë¡œì»¬ ì½”ë“œ ?¬ìš©)")
     parser.add_argument("--no-publish", action="store_true",
-                        help="ë°œí–‰ ë‹¨ê³„ ìŠ¤í‚µ (ì½˜í…ì¸ ë§Œ ìƒì„±)")
+                        help="ë°œí–‰ ?¨ê³„ ?¤í‚µ (ì½˜í…ì¸ ë§Œ ?ì„±)")
     args = parser.parse_args()
 
     logger.info("=" * 60)
-    logger.info("ì¹´ë“œë‰´ìŠ¤ ìë™í™” â€” ìŠ¤ì¼€ì¤„ ì‹¤í–‰ ì‹œì‘")
+    logger.info("ì¹´ë“œ?´ìŠ¤ ?ë™?????¤ì?ì¤??¤í–‰ ?œì‘")
     logger.info("=" * 60)
 
-    # 1. API í‚¤ í™•ì¸
+    # 1. API ???•ì¸
     get_api_key()
 
-    # 2. GitHub ë™ê¸°í™”
-    if not args.no_sync:
+    # 2. GitHub ?™ê¸°??    if not args.no_sync:
         try:
             sync_repo()
         except Exception as e:
-            logger.warning(f"GitHub ë™ê¸°í™” ì‹¤íŒ¨ (ë¡œì»¬ ì½”ë“œë¡œ ê³„ì†): {e}")
+            logger.warning(f"GitHub ?™ê¸°???¤íŒ¨ (ë¡œì»¬ ì½”ë“œë¡?ê³„ì†): {e}")
 
-    # 3. ì‹œìŠ¤í…œ í°íŠ¸ + ì˜ì¡´ì„±
-    _install_system_fonts()
+    # 3. ?œìŠ¤???°íŠ¸ + ?˜ì¡´??    _install_system_fonts()
     _install_deps()
 
-    # 4. config íŒŒì¼ í™•ì¸
+    # 4. config ?Œì¼ ?•ì¸
     if not CONFIG_FILE.exists():
         raise FileNotFoundError(
-            f"ì„¤ì • íŒŒì¼ ì—†ìŒ: {CONFIG_FILE}\n"
-            "config/my_job.json ì„ ìƒì„±í•˜ì„¸ìš”. (config/sample_job.json ì°¸ê³ )"
+            f"?¤ì • ?Œì¼ ?†ìŒ: {CONFIG_FILE}\n"
+            "config/my_job.json ???ì„±?˜ì„¸?? (config/sample_job.json ì°¸ê³ )"
         )
 
-    # 5. íŒŒì´í”„ë¼ì¸ ì‹¤í–‰
+    # 5. ?Œì´?„ë¼???¤í–‰
     run_pipeline(step=args.step, no_publish=args.no_publish)
 
     logger.info("=" * 60)
-    logger.info("âœ… ìŠ¤ì¼€ì¤„ ì‹¤í–‰ ì™„ë£Œ")
+    logger.info("???¤ì?ì¤??¤í–‰ ?„ë£Œ")
     logger.info("=" * 60)
 
 
